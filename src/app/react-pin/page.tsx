@@ -5,9 +5,15 @@ export default function ReactPinPage() {
   return (
     <div>
       <div className="block-header text-center">
-        <h1>React Pin</h1>
+        <div className="container">
+          <h1>React Pin</h1>
+        </div>
       </div>
-      <ReactPin />
+      <div className="component-wrapper text-center">
+        <div className="container">
+          <ReactPin />
+        </div>
+      </div>
     </div>
   )
 }
