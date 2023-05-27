@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 
 import PinInput from './components/PinInput'
-import { Pin } from '../../@types'
+import { Pin } from './@types'
 
 type PinType = 'numeric' | 'alphaNumeric' | 'alphaNumericPassword' | 'numericPassword' | 'alphabet'
 
