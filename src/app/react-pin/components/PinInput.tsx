@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Pin } from '../../../@types'
+import { Pin } from '../@types'
 
 interface PinInputProps {
   type: string,
