@@ -4,9 +4,9 @@ import Link from 'next/link'
 
 const Header = () => {
   return (
-    <header>
+    <header style={{ background: 'white' }}>
       <div className="container">
-        <div className="header-content flex justify-between items-center" style={{ padding: '10px 0', background: 'white' }}>
+        <div className="header-content flex justify-between items-center" style={{ padding: '10px 0' }}>
           <div className="logo">
             <Link href={'/'}>
               <Image src='/logo.png' width={220} height={50} alt='React Component Playground' priority />
