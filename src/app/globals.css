@@ -1,3 +1,15 @@
 .text-center {
   text-align: center;
 }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.text-to-copy {
+  color: red;
+  cursor: pointer; 
+  user-select: none;
+}
