@@ -1,3 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #f2f2f2;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .text-center {
   text-align: center;
 }
@@ -12,4 +28,22 @@
   color: red;
   cursor: pointer; 
   user-select: none;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
