@@ -1,10 +1,17 @@
 'use client'
+import { Metadata } from 'next';
+
 import CopyToClipboard from "../components/CopyToClipboard"
 import ReactPin from "./ReactPin"
 
+export const metadata: Metadata = {
+  title: 'React Pin',
+  description: 'React pin component',
+};
+ 
 export default function ReactPinPage() {
   return (
-    <div>
+    <>
       <div className="block-header text-center">
         <div className="container">
           <h1>React Pin</h1>
@@ -16,6 +23,6 @@ export default function ReactPinPage() {
           <ReactPin />
         </div>
       </div>
-    </div>
+    </>
   )
 }
