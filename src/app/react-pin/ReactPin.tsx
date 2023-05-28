@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 
 import PinInput from './components/PinInput'
