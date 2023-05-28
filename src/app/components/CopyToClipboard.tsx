@@ -1,10 +1,8 @@
 import React from 'react'
 
-import { copyToClipboard } from '../helpers/app.helpers'
-
 const CopyToClipboard = ({ text }:{ text: string }) => {
   const handleCopy = async () => {
-    await copyToClipboard(text)
+    navigator.clipboard.writeText(text);
   }
 
   return (
