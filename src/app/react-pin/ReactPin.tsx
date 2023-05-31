@@ -5,13 +5,14 @@ import React, { useCallback, useMemo, useRef, useState } from 'react'
 import PinInput from './components/PinInput'
 import { Pin } from './@types'
 
-type PinType = 'numeric' | 'alphaNumeric' | 'alphaNumericPassword' | 'numericPassword' | 'alphabet'
+export type PinType = 'numeric' | 'alphaNumeric' | 'alphaNumericPassword' | 'numericPassword' | 'alphabet'
 
 interface ReactPinProps {
   length?: number,
   type?: PinType,
   inputClass?: string
 }
+
 const ReactPin:React.FC<ReactPinProps> = ({ length = 6, type = 'numeric', inputClass }) => {
   const inputsRef = useRef<HTMLInputElement[]>([])
   const pinLength = useMemo(() => {
