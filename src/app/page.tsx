@@ -15,11 +15,11 @@ export default function Home() {
           <h2>Components</h2>
         </div>
         <div className="list-holder">
-          <ul className="components-list">
+          <ol className="components-list">
             <li>
               <Link href={'/react-pin'}>React Pin</Link>
             </li>
-          </ul>
+          </ol>
         </div>
       </div>
     </section>

@@ -59,3 +59,12 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+.components-list {
+  padding-left: 20px;
+}
+
+.components-list a:hover {
+  cursor: pointer;
+  color: red;
+}
