@@ -43,6 +43,10 @@ ul {
   align-items: center;
 }
 
+.items-end {
+  align-items: flex-end;
+}
+
 .justify-center {
   justify-content: center;
 }
