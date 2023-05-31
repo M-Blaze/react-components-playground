@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState, useEffect } from 'react'
 
 import PinInput from './components/PinInput'
 import { Pin } from './@types'
@@ -68,6 +68,10 @@ const ReactPin:React.FC<ReactPinProps> = ({ length = 6, type = 'numeric', inputC
 
     setTimeout(() => inputsRef.current[index].focus(), 0)
   }
+  
+  useEffect(() => {
+    setCodes(new Array(pinLength).fill(''))
+  }, [pinLength])
 
   return (
     <div className='react-pin'>

@@ -14,13 +14,13 @@ export const metadata: Metadata = {
 
 type ReactPinState = {
   length: number,
-  reloadKey: number,
   type: PinType
 }
 
 enum ActionKind {
   updateLength = 'LENGTH',
-  updateType = 'TYPE'
+  updateType = 'TYPE',
+  resetState = 'RESET'
 }
 
 type LengthUpdateAction = {
@@ -33,7 +33,11 @@ type TypeUpdateAction = {
   payload: PinType
 }
 
-type Action = LengthUpdateAction | TypeUpdateAction
+type ResetStateAction = {
+  type: ActionKind.resetState
+}
+
+type Action = LengthUpdateAction | TypeUpdateAction | ResetStateAction
 
 const InputTypes = ['numeric', 'alphaNumeric', 'alphaNumericPassword', 'numericPassword', 'alphabet'] as const
 
@@ -44,18 +48,23 @@ const reactPinReducer = (state: ReactPinState, action: Action) => {
 
       return {
         ...state,
-        length: newLength,
-        reloadKey: state.reloadKey + 1
+        length: newLength
       }
     }
 
     case ActionKind.updateType: {
       return {
         ...state,
-        type: action.payload,
-        reloadKey: state.reloadKey + 1
+        type: action.payload
       }
     }
+
+    case ActionKind.resetState: {
+      return {
+        ...INITIAL_STATE
+      }
+    }
+
 
     default: return state
   }
@@ -63,12 +72,19 @@ const reactPinReducer = (state: ReactPinState, action: Action) => {
 
 const INITIAL_STATE: ReactPinState = {
   length: 6,
-  type: 'alphaNumeric',
-  reloadKey: 0
+  type: 'alphaNumeric'
 }
  
 export default function ReactPinPage() {
   const [reactPinProps, dispatch] = useReducer(reactPinReducer, INITIAL_STATE)
+
+  const lengthHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: ActionKind.updateLength, payload: Number(e.target.value) })
+  }
+
+  const typeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch({ type: ActionKind.updateType, payload: e.target.value as PinType })
+  }
 
   return (
     <>
@@ -81,22 +97,25 @@ export default function ReactPinPage() {
       <div className="component-wrapper text-center">
         <div className="container">
           <div className="inputs-block text-left">
-            <div className="flex justify-center" style={{ marginBottom: '20px' }}>
+            <div className="flex justify-center items-end" style={{ marginBottom: '20px' }}>
               <div className="input-group" style={{ marginRight: '10px' }}>
                 <label htmlFor="pin-length" style={{ marginBottom: '5px', display: 'inline-block' }}>Length</label> <br />
-                <input type="number" id='pin-length' value={reactPinProps.length} onChange={eve => dispatch({ type: ActionKind.updateLength, payload: Number(eve.target.value) })} />
+                <input type="number" id='pin-length' autoComplete='off' style={{ padding: '5px' }} value={reactPinProps.length} onChange={lengthHandler} />
               </div>
               <div className="input-group">
                 <label htmlFor="pin-type" style={{ marginBottom: '5px', display: 'inline-block' }}>Type</label> <br />
-                <select name="react-pin-type-select" id='pin-type' value={reactPinProps.type}>
+                <select name="react-pin-type-select" id='pin-type' autoComplete='off' style={{ padding: '5px' }} value={reactPinProps.type} onChange={typeHandler}>
                   {
                     InputTypes.map(type => <option value={type} key={type}>{type}</option>)
                   }
                 </select>
               </div>
+              <div className="button-group"  style={{ marginLeft: '10px' }}>
+                <button type='button' style={{ padding: '5px 10px', cursor: 'pointer' }} onClick={() => dispatch({ type: ActionKind.resetState })}>Reset</button>
+              </div>
             </div>
           </div>
-          <ReactPin type={reactPinProps.type} length={reactPinProps.length} key={reactPinProps.reloadKey}/>
+          <ReactPin type={reactPinProps.type} length={reactPinProps.length} />
         </div>
       </div>
     </>
