@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 
 type ReactPinState = {
   length: number,
+  reloadKey: number,
   type: PinType
 }
 
@@ -39,16 +40,20 @@ const InputTypes = ['numeric', 'alphaNumeric', 'alphaNumericPassword', 'numericP
 const reactPinReducer = (state: ReactPinState, action: Action) => {
   switch(action.type) {
     case ActionKind.updateLength: {
+      const newLength = action.payload > 0 ? action.payload : 1
+
       return {
         ...state,
-        length: action.payload
+        length: newLength,
+        reloadKey: state.reloadKey + 1
       }
     }
 
     case ActionKind.updateType: {
       return {
         ...state,
-        type: action.payload
+        type: action.payload,
+        reloadKey: state.reloadKey + 1
       }
     }
 
@@ -58,7 +63,8 @@ const reactPinReducer = (state: ReactPinState, action: Action) => {
 
 const INITIAL_STATE: ReactPinState = {
   length: 6,
-  type: 'alphaNumeric'
+  type: 'alphaNumeric',
+  reloadKey: 0
 }
  
 export default function ReactPinPage() {
@@ -90,7 +96,7 @@ export default function ReactPinPage() {
               </div>
             </div>
           </div>
-          <ReactPin {...reactPinProps}/>
+          <ReactPin type={reactPinProps.type} length={reactPinProps.length} key={reactPinProps.reloadKey}/>
         </div>
       </div>
     </>
