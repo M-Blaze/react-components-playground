@@ -1,12 +1,14 @@
 'use client'
 
-import { useReducer } from 'react';
+import { useMemo, useReducer } from 'react';
 
 import CopyToClipboard from "../components/CopyToClipboard"
 import ReactPin, { PinType } from "./ReactPin"
 
+type Length = number
+
 type ReactPinState = {
-  length: number,
+  length: Length,
   type: PinType
 }
 
@@ -18,7 +20,7 @@ enum ActionKind {
 
 type LengthUpdateAction = {
   type: ActionKind.updateLength,
-  payload: number
+  payload: Length
 }
 
 type TypeUpdateAction = {
@@ -37,11 +39,9 @@ const InputTypes = ['numeric', 'alphaNumeric', 'alphaNumericPassword', 'numericP
 const reactPinReducer = (state: ReactPinState, action: Action) => {
   switch(action.type) {
     case ActionKind.updateLength: {
-      const newLength = action.payload > 0 ? action.payload : 1
-
       return {
         ...state,
-        length: newLength
+        length: action.payload
       }
     }
 
@@ -72,7 +72,10 @@ export default function ReactPinPage() {
   const [reactPinProps, dispatch] = useReducer(reactPinReducer, INITIAL_STATE)
 
   const lengthHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: ActionKind.updateLength, payload: Number(e.target.value) })
+    const value = Number(e.target.value)
+    const length = (value > 0) ? value : 0
+
+    dispatch({ type: ActionKind.updateLength, payload: length })
   }
 
   const typeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -93,7 +96,7 @@ export default function ReactPinPage() {
             <div className="flex justify-center items-end" style={{ marginBottom: '20px' }}>
               <div className="input-group" style={{ marginRight: '10px' }}>
                 <label htmlFor="pin-length" style={{ marginBottom: '5px', display: 'inline-block' }}>Length</label> <br />
-                <input type="number" id='pin-length' autoComplete='off' style={{ padding: '5px' }} value={reactPinProps.length} onChange={lengthHandler} />
+                <input type="number" id='pin-length' autoComplete='off' style={{ padding: '5px' }} defaultValue={reactPinProps.length} onChange={lengthHandler} />
               </div>
               <div className="input-group">
                 <label htmlFor="pin-type" style={{ marginBottom: '5px', display: 'inline-block' }}>Type</label> <br />
