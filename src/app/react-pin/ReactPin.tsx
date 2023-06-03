@@ -10,10 +10,11 @@ export type PinType = 'numeric' | 'alphaNumeric' | 'alphaNumericPassword' | 'num
 interface ReactPinProps {
   length?: number,
   type?: PinType,
-  inputClass?: string
+  inputClass?: string,
+  onFilled?: () => void
 }
 
-const ReactPin:React.FC<ReactPinProps> = ({ length = 6, type = 'numeric', inputClass }) => {
+const ReactPin:React.FC<ReactPinProps> = ({ length = 6, type = 'numeric', inputClass, onFilled }) => {
   const inputsRef = useRef<HTMLInputElement[]>([])
   const pinLength = useMemo(() => {
     return Number(length) || 0 
@@ -62,8 +63,20 @@ const ReactPin:React.FC<ReactPinProps> = ({ length = 6, type = 'numeric', inputC
       const prevCodes = [...currCodes]
       
       prevCodes[index] = code
+      emitEventOnFilled(code,prevCodes)
+
       return prevCodes
     })
+  }
+
+  const emitEventOnFilled = (code: Pin, codes: Pin[]) => {
+    if (code === '' || !onFilled) return
+    
+    for (const code of codes) {
+      if (code === '') return
+    }
+
+    onFilled()
   }
 
   const focusInput = (index: number) => {
