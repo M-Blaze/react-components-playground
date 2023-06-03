@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useReducer } from 'react';
+import { useReducer, useState } from 'react';
 
 import CopyToClipboard from "../components/CopyToClipboard"
 import ReactPin, { PinType } from "./ReactPin"
@@ -69,7 +69,12 @@ const INITIAL_STATE: ReactPinState = {
 }
  
 export default function ReactPinPage() {
+  const [enteredValue, setEnteredValue] = useState<string>('')
   const [reactPinProps, dispatch] = useReducer(reactPinReducer, INITIAL_STATE)
+  
+  const onFillHandler = (code: string) => {
+    setEnteredValue(code)
+  }
 
   const lengthHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value)
@@ -111,7 +116,10 @@ export default function ReactPinPage() {
               </div>
             </div>
           </div>
-          <ReactPin type={reactPinProps.type} length={reactPinProps.length} />
+          <div className="text-wrap" style={{ marginBottom: '20px' }}>
+            <strong>Value entered:</strong>&nbsp; {enteredValue}
+          </div>
+          <ReactPin type={reactPinProps.type} length={reactPinProps.length} onFill={onFillHandler} />
         </div>
       </div>
     </>

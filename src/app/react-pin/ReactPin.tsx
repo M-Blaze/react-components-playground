@@ -11,10 +11,10 @@ interface ReactPinProps {
   length?: number,
   type?: PinType,
   inputClass?: string,
-  onFilled?: () => void
+  onFill?: (code: string) => void
 }
 
-const ReactPin:React.FC<ReactPinProps> = ({ length = 6, type = 'numeric', inputClass, onFilled }) => {
+const ReactPin:React.FC<ReactPinProps> = ({ length = 6, type = 'numeric', inputClass, onFill }) => {
   const inputsRef = useRef<HTMLInputElement[]>([])
   const pinLength = useMemo(() => {
     return Number(length) || 0 
@@ -63,20 +63,8 @@ const ReactPin:React.FC<ReactPinProps> = ({ length = 6, type = 'numeric', inputC
       const prevCodes = [...currCodes]
       
       prevCodes[index] = code
-      emitEventOnFilled(code,prevCodes)
-
       return prevCodes
     })
-  }
-
-  const emitEventOnFilled = (code: Pin, codes: Pin[]) => {
-    if (code === '' || !onFilled) return
-    
-    for (const code of codes) {
-      if (code === '') return
-    }
-
-    onFilled()
   }
 
   const focusInput = (index: number) => {
@@ -88,6 +76,15 @@ const ReactPin:React.FC<ReactPinProps> = ({ length = 6, type = 'numeric', inputC
     setTimeout(() => inputsRef.current[index].focus(), 0)
   }
   
+  useEffect(() => {
+    const value = codes.join('')
+
+    if (!onFill || !value) return
+    
+    onFill(value)
+    // eslint-disable-next-line
+  }, [codes])
+
   useEffect(() => {
     setCodes(new Array(pinLength).fill(''))
   }, [pinLength])
