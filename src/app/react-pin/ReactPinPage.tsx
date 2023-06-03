@@ -81,10 +81,16 @@ export default function ReactPinPage() {
     const length = (value > 0) ? value : 0
 
     dispatch({ type: ActionKind.updateLength, payload: length })
+    setEnteredValue('')
   }
 
   const typeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch({ type: ActionKind.updateType, payload: e.target.value as PinType })
+  }
+
+  const reset = () => {
+    dispatch({ type: ActionKind.resetState })
+    setEnteredValue('')
   }
 
   return (
@@ -112,7 +118,7 @@ export default function ReactPinPage() {
                 </select>
               </div>
               <div className="button-group"  style={{ marginLeft: '10px' }}>
-                <button type='button' style={{ padding: '5px 10px', cursor: 'pointer' }} onClick={() => dispatch({ type: ActionKind.resetState })}>Reset</button>
+                <button type='button' style={{ padding: '5px 10px', cursor: 'pointer' }} onClick={reset}>Reset</button>
               </div>
             </div>
           </div>
