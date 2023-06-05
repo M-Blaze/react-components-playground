@@ -79,7 +79,7 @@ const ReactPin:React.FC<ReactPinProps> = ({ length = 6, type = 'numeric', inputC
   useEffect(() => {
     const value = codes.join('')
 
-    if (!onFill || !value) return
+    if (!onFill) return
     
     onFill(value)
     // eslint-disable-next-line
